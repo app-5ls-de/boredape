@@ -25,9 +25,6 @@
       let n = Math.floor(Math.random() * 10000);
       let img = document.getElementById("ape");
 
-      img.src = base + n + ".png";
-      img.alt = "BAYC " + n;
-
       async function fetch_json(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error(response.status);
@@ -38,6 +35,9 @@
       fetch_json(base + n + ".json").then((data) => {
         document.body.style.backgroundColor = data.color;
       });
+      
+      img.src = base + n + ".png";
+      img.alt = "BAYC " + n;
     </script>
   </body>
 </html>
