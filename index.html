@@ -25,28 +25,51 @@
       let base =
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
       let img = document.getElementById("ape");
-      let preload = document.getElementById("preload");
+      let img_preload = document.getElementById("preload");
       let max = 10000;
 
       const rand = () => Math.floor(Math.random() * max);
 
-      async function set_color(url) {
+      async function get_color(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error(response.status);
         const data = await response.json();
-        document.body.style.backgroundColor = data.color;
+        return data.color;
       }
 
-      const load_img = (src) =>
+      const load_img = (img_el, src) =>
         new Promise((resolve, reject) => {
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = src;
+          img_el.onload = resolve;
+          img_el.onerror = reject;
+          img_el.src = src;
         });
 
-      function ape(n) {
-        set_color(base + n + ".json");
-        load_img(base + n + ".png");
+      function ape(n, preload = false) {
+        let url_json = base + n + ".json";
+        let url_img = base + n + ".png";
+
+        if (preload) {
+          return Promise.all([
+            get_color(url_json),
+            load_img(img_preload, url_img),
+          ]).then(([color]) => {
+            document.body.style.backgroundColor = color;
+            load_img(img, url_img);
+          });
+        }
+
+        get_color(url_json).then((color) => {
+          document.body.style.backgroundColor = color;
+        });
+        load_img(img, url_img);
+      }
+
+      const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      async function timer() {
+        await ape(rand(), true);
+        await timeout(2000);
+        timer();
       }
 
       let number = rand();
@@ -59,11 +82,7 @@
       }
 
       if (number) ape(number);
-      else {
-        setInterval(() => {
-          ape(rand());
-        }, 2000);
-      }
+      else timer();
     </script>
   </body>
 </html>
