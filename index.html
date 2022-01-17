@@ -44,29 +44,22 @@
           img_el.src = src;
         });
 
-      async function ape(n, preload = false) {
+      async function ape(n) {
         let url_json = base + n + ".json";
         let url_img = base + n + ".png";
 
-        if (preload) {
-          [color] = await Promise.all([
-            get_color(url_json),
-            load_img(img_preload, url_img),
-          ]);
-          document.body.style.backgroundColor = color;
-          load_img(img, url_img);
-        }
-
-        get_color(url_json).then((color) => {
-          document.body.style.backgroundColor = color;
-        });
+        [color] = await Promise.all([
+          get_color(url_json),
+          load_img(img_preload, url_img),
+        ]);
+        document.body.style.backgroundColor = color;
         load_img(img, url_img);
       }
 
       const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
       async function timer() {
-        await ape(rand(), true);
+        await ape(rand());
         await timeout(3000);
         timer();
       }
