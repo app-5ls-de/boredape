@@ -6,6 +6,14 @@
     <link rel="shortcut icon" href="/favicon.ico" />
 
     <style>
+      #next {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 30vh;
+      }
+
       img#ape {
         position: fixed;
         left: 50%;
@@ -23,8 +31,9 @@
   </head>
 
   <body>
-    <img id="ape" src="" />
+    <div id="next"></div>
 
+    <img id="ape" src="" />
     <img id="preload" style="display: none" />
 
     <script>
@@ -32,6 +41,7 @@
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
       let img = document.getElementById("ape");
       let img_preload = document.getElementById("preload");
+      let next = document.getElementById("next");
       let max = 10000;
 
       const rand = () => Math.floor(Math.random() * max);
@@ -86,8 +96,10 @@
         if (Number.isInteger(num) && num < max) number = num;
       }
 
-      if (number) ape(number);
-      else timer();
+      if (number) {
+        ape(number);
+        next.addEventListener("click", () => ape(rand()));
+      } else timer();
     </script>
   </body>
 </html>
