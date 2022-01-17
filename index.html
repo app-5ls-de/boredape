@@ -59,6 +59,17 @@
           ).matches) ||
         (window.devicePixelRatio && window.devicePixelRatio > 1);
 
+      async function download(url, filename) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(response.status);
+        const blob = await response.blob();
+
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      }
+
       const load_img = (img_el, src) =>
         new Promise((resolve, reject) => {
           img_el.onload = resolve;
@@ -100,6 +111,11 @@
         ape(number);
         next.addEventListener("click", () => ape(rand()));
       } else timer();
+
+      img.addEventListener("click", () => {
+        let url = img.src;
+        download(url, "boredape-" + url.split("/")[7].split(".")[0] + ".png");
+      });
     </script>
   </body>
 </html>
