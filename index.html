@@ -42,19 +42,19 @@
         const data = await response.json();
         return data.color;
       }
-      const isRetina = () =>
+      const isRetina =
         (window.matchMedia &&
           window.matchMedia(
             "only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)"
           ).matches) ||
-        window.devicePixelRatio > 1;
+        (window.devicePixelRatio && window.devicePixelRatio > 1);
 
       const load_img = (img_el, src) =>
         new Promise((resolve, reject) => {
           img_el.onload = resolve;
           img_el.onerror = reject;
           img_el.src = src;
-          if (isRetina()) img_el.srcset = src + " 2x";
+          if (isRetina) img_el.srcset = src + " 2x";
         });
 
       async function ape(n) {
