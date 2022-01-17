@@ -44,18 +44,17 @@
           img_el.src = src;
         });
 
-      function ape(n, preload = false) {
+      async function ape(n, preload = false) {
         let url_json = base + n + ".json";
         let url_img = base + n + ".png";
 
         if (preload) {
-          return Promise.all([
+          [color] = await Promise.all([
             get_color(url_json),
             load_img(img_preload, url_img),
-          ]).then(([color]) => {
-            document.body.style.backgroundColor = color;
-            load_img(img, url_img);
-          });
+          ]);
+          document.body.style.backgroundColor = color;
+          load_img(img, url_img);
         }
 
         get_color(url_json).then((color) => {
