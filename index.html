@@ -23,6 +23,9 @@
       let base =
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
       let img = document.getElementById("ape");
+      let max = 10000
+
+      const rand = () => Math.floor(Math.random() * max);
 
       async function fetch_json(url) {
         const response = await fetch(url);
@@ -39,7 +42,13 @@
         img.src = base + n + ".png";
       }
 
-      let n = Math.floor(Math.random() * 10000);
+      let n = rand()
+      let option = location.search ? location.search : location.hash;
+      if (option) {
+        if (option.substring(1) == "play") setInterval(()=>{ape(rand())},2000)
+        let num = Number(option.substring(1))
+        if (Number.isInteger(num) && num < max) n = num
+      }
 
       ape(n);
     </script>
