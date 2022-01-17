@@ -113,8 +113,10 @@
       } else timer();
 
       img.addEventListener("click", () => {
-        let url = img.src;
-        download(url, "boredape-" + url.split("/")[7].split(".")[0] + ".png");
+        if (confirm("Download image?")) {
+          let url = img.src;
+          download(url, "boredape-" + url.split("/")[7].split(".")[0] + ".png");
+        }
       });
     </script>
   </body>
