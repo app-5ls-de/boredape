@@ -19,6 +19,8 @@
   <body>
     <img id="ape" src="" />
 
+    <img id="preload" style="display: none" />
+
     <script>
       let base =
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
@@ -27,19 +29,23 @@
 
       const rand = () => Math.floor(Math.random() * max);
 
-      async function fetch_json(url) {
+      async function set_color(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error(response.status);
         const data = await response.json();
-        return data;
+        document.body.style.backgroundColor = data.color;
       }
 
-      function ape(n) {
-        fetch_json(base + n + ".json").then((data) => {
-          document.body.style.backgroundColor = data.color;
-      });
+      const load_img = (src) =>
+        new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = src;
+        });
 
-        img.src = base + n + ".png";
+      function ape(n) {
+        set_color(base + n + ".json");
+        load_img(base + n + ".png");
       }
 
       let n = rand();
