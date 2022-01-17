@@ -22,7 +22,6 @@
     <script>
       let base =
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
-      let n = Math.floor(Math.random() * 10000);
       let img = document.getElementById("ape");
 
       async function fetch_json(url) {
@@ -32,11 +31,17 @@
         return data;
       }
 
-      fetch_json(base + n + ".json").then((data) => {
-        document.body.style.backgroundColor = data.color;
+      function ape(n) {
+        fetch_json(base + n + ".json").then((data) => {
+          document.body.style.backgroundColor = data.color;
       });
-      
-      img.src = base + n + ".png";
+
+        img.src = base + n + ".png";
+      }
+
+      let n = Math.floor(Math.random() * 10000);
+
+      ape(n);
     </script>
   </body>
 </html>
