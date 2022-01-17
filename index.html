@@ -48,7 +48,7 @@
         load_img(base + n + ".png");
       }
 
-      let n = rand();
+      let number = rand();
       let option = location.search ? location.search : location.hash;
       if (option) {
         if (option.substring(1) == "play")
@@ -56,10 +56,10 @@
             ape(rand());
           }, 2000);
         let num = Number(option.substring(1));
-        if (Number.isInteger(num) && num < max) n = num;
+        if (Number.isInteger(num) && num < max) number = num;
       }
 
-      ape(n);
+      ape(number);
     </script>
   </body>
 </html>
