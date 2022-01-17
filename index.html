@@ -91,12 +91,22 @@
         load_img(img, url_img);
       }
 
-      const timeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      var timer_running = false;
+      var timeoutID = null;
+      const timeout = (ms) =>
+        new Promise((resolve) => (timeoutID = setTimeout(resolve, ms)));
 
       async function timer() {
+        timer_running = true;
         await ape(rand());
         await timeout(3000);
-        timer();
+        if (timer_running && timeoutID) timer();
+      }
+
+      function stop_timer() {
+        timer_running = false;
+        timeoutID = null;
+        clearTimeout(timeoutID);
       }
 
       let number = rand();
@@ -115,7 +125,9 @@
 
       next.addEventListener("long-press", (e) => {
         e.preventDefault();
-        timer();
+
+        if (!timer_running) timer();
+        else stop_timer();
       });
 
       img.addEventListener("click", () => {
