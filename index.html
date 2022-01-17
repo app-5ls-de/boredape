@@ -36,6 +36,7 @@
     <img id="ape" src="" />
     <img id="preload" style="display: none" />
 
+    <script src="https://cdn.jsdelivr.net/npm/long-press-event@2.4.4/dist/long-press-event.min.js"></script>
     <script>
       let base =
         "https://cdn.jsdelivr.net/gh/PatrickHaussmann/boredape@v1.0.0/data/";
@@ -111,6 +112,11 @@
         ape(number);
         next.addEventListener("click", () => ape(rand()));
       } else timer();
+
+      next.addEventListener("long-press", (e) => {
+        e.preventDefault();
+        timer();
+      });
 
       img.addEventListener("click", () => {
         if (confirm("Download image?")) {
