@@ -135,8 +135,8 @@
       });
 
       img.addEventListener("click", () => {
+        let url = img.src;
         if (confirm("Download image?")) {
-          let url = img.src;
           download(url, "BoredApe-" + url.split("/")[7]);
         }
       });
