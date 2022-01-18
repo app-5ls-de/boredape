@@ -114,10 +114,10 @@
       let number = rand();
       let option = location.search ? location.search : location.hash;
       if (option) {
-        if (option.substring(1) == "play") number = null;
-
         let num = Number(option.substring(1));
-        if (Number.isInteger(num) && num < max) number = num;
+        if (option.substring(1) == "play") number = null;
+        else if (Number.isInteger(num) && num < max) number = num;
+        else window.location.href = window.location.pathname;
       }
 
       if (number) ape(number);
