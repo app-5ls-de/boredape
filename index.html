@@ -126,10 +126,11 @@
       next.addEventListener("click", () => {
         if (!running_timer) ape(rand());
       });
+
       next.addEventListener("long-press", (e) => {
         e.preventDefault();
 
-        if (!timer_running) timer();
+        if (!running_timer) timer();
         else stop_timer();
       });
 
