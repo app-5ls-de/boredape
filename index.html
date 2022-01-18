@@ -120,11 +120,12 @@
         if (Number.isInteger(num) && num < max) number = num;
       }
 
-      if (number) {
-        ape(number);
-        next.addEventListener("click", () => ape(rand()));
-      } else timer();
+      if (number) ape(number);
+      else timer();
 
+      next.addEventListener("click", () => {
+        if (!running_timer) ape(rand());
+      });
       next.addEventListener("long-press", (e) => {
         e.preventDefault();
 
