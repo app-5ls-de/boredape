@@ -95,22 +95,20 @@
         load_img(img, url_img);
       }
 
-      var timer_running = false;
-      var timeoutID = null;
+      var running_timer = null;
       const timeout = (ms) =>
-        new Promise((resolve) => (timeoutID = setTimeout(resolve, ms)));
+        new Promise((resolve) => (running_timer = setTimeout(resolve, ms)));
 
       async function timer() {
         timer_running = true;
         await ape(rand());
         await timeout(3000);
-        if (timer_running && timeoutID) timer();
+        if (running_timer) timer();
       }
 
       function stop_timer() {
-        timer_running = false;
-        timeoutID = null;
-        clearTimeout(timeoutID);
+        clearTimeout(running_timer);
+        running_timer = null;
       }
 
       let number = rand();
